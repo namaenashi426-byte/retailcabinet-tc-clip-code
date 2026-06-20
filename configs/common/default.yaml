@@ -146,9 +146,9 @@ retail4:
   label_files:
     default: labels/retail4_cjj_labels.csv
   ann_files:
-    train: datasets_splits/retail4_cjj_splits/train.txt
-    val: datasets_splits/retail4_cjj_splits/val.txt
-    test: datasets_splits/retail4_cjj_splits/test.txt
+    train: datasets_splits/train.txt
+    val: datasets_splits/val.txt
+    test: datasets_splits/test.txt
 
 # Frame sampling. Keep "uniform" for the original TC-CLIP baseline.
 sample_type: uniform

@@ -3,7 +3,7 @@
   "subset": "cjj",
   "tc_root": "/path/to/retailcabinet-tc-clip-code",
   "data_root": "/path/to/RetailCabinet-4/videos",
-  "label_file": "/path/to/retailcabinet-tc-clip-code/code/labels/retail4_cjj_labels.csv",
+  "label_file": "/path/to/retailcabinet-tc-clip-code/labels/retail4_cjj_labels.csv",
   "labels": {
     "0": "drink",
     "1": "open",

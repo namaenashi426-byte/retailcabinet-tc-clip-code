@@ -19,7 +19,7 @@ The raw RetailCabinet-4 videos are not included in this repository. They contain
 The included files support reproducible setup and result inspection:
 
 - `labels/retail4_cjj_labels.csv`: class names.
-- `datasets_splits/retail4_cjj_splits/`: fixed train, validation, and test split files.
+- `datasets_splits/`: fixed train, validation, and test split files.
 - `source_data/`: processed tabular source data for the paper figures.
 - `configs/data/fully_supervised_cjj.yaml`: RetailCabinet-4 data configuration.
 - `external_baselines/`: comparison-experiment wrappers, generated config examples,

@@ -130,7 +130,14 @@ def main() -> int:
     args = parser.parse_args()
 
     tc_root = args.tc_root.resolve()
-    default_yaml = tc_root / "code" / "configs" / "common" / "default.yaml"
+    default_yaml_candidates = [
+        tc_root / "configs" / "common" / "default.yaml",
+        tc_root / "code" / "configs" / "common" / "default.yaml",
+    ]
+    default_yaml = next(
+        (path for path in default_yaml_candidates if path.exists()),
+        default_yaml_candidates[0],
+    )
     data_root = args.data_root
     if data_root is None:
         configured_root = _read_retail4_root(default_yaml)
@@ -139,8 +146,22 @@ def main() -> int:
         data_root = Path(configured_root)
     data_root = data_root.resolve()
 
-    split_dir = tc_root / "code" / "datasets_splits" / "retail4_cjj_splits"
-    label_file = tc_root / "code" / "labels" / "retail4_cjj_labels.csv"
+    split_dir_candidates = [
+        tc_root / "datasets_splits",
+        tc_root / "code" / "datasets_splits",
+    ]
+    split_dir = next(
+        (path for path in split_dir_candidates if (path / "train.txt").exists()),
+        split_dir_candidates[0],
+    )
+    label_file_candidates = [
+        tc_root / "labels" / "retail4_cjj_labels.csv",
+        tc_root / "code" / "labels" / "retail4_cjj_labels.csv",
+    ]
+    label_file = next(
+        (path for path in label_file_candidates if path.exists()),
+        label_file_candidates[0],
+    )
     out_dir = args.out_dir.resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
