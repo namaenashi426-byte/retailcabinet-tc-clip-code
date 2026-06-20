@@ -1,0 +1,13 @@
+split,label,class_name,count
+train,0,drink,155
+train,1,open,132
+train,2,purchase,605
+train,3,putback,308
+val,0,drink,40
+val,1,open,34
+val,2,purchase,151
+val,3,putback,76
+test,0,drink,48
+test,1,open,40
+test,2,purchase,184
+test,3,putback,96

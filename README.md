@@ -10,6 +10,7 @@ The implementation extends the published TC-CLIP codebase with:
 - Temporal Difference Head (TDH) for signed adjacent-frame feature differences.
 - RetailCabinet-4 labels and fixed train/validation/test split files.
 - Tabular source data used to generate the reported figures.
+- External-baseline orchestration code for MMAction2 and ViFi-CLIP comparisons.
 
 ## Data Availability
 
@@ -21,6 +22,8 @@ The included files support reproducible setup and result inspection:
 - `datasets_splits/retail4_cjj_splits/`: fixed train, validation, and test split files.
 - `source_data/`: processed tabular source data for the paper figures.
 - `configs/data/fully_supervised_cjj.yaml`: RetailCabinet-4 data configuration.
+- `external_baselines/`: comparison-experiment wrappers, generated config examples,
+  RetailCabinet-4 annotation files, and aggregated baseline result tables.
 
 To run training or evaluation, place the restricted RetailCabinet-4 video files in the structure referenced by the split files and set `retail4.root` in `configs/common/default.yaml` or override it on the command line.
 
@@ -98,6 +101,7 @@ This release intentionally excludes:
 - Raw RetailCabinet-4 video data.
 - Model checkpoints and generated workspaces.
 - Private experiment logs with machine-specific paths.
+- Third-party baseline repositories downloaded under `external_baselines/repos/`.
 - Manuscript drafts, submission documents, and local recovery files.
 
 ## License and Attribution

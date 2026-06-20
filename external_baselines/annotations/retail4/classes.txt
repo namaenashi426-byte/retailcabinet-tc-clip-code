@@ -1,0 +1,4 @@
+drink
+open
+purchase
+putback

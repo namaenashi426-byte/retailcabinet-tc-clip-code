@@ -1,0 +1,4 @@
+0 drink
+1 open
+2 purchase
+3 putback

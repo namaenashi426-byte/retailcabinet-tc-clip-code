@@ -1,0 +1,39 @@
+BASE: ['']
+DATA:
+  ROOT: '/path/to/RetailCabinet-4/videos'
+  TRAIN_FILE: '/path/to/retailcabinet-tc-clip-code/external_baselines/annotations/retail4/train.txt'
+  VAL_FILE: '/path/to/retailcabinet-tc-clip-code/external_baselines/annotations/retail4/val.txt'
+  DATASET: retail4_cjj
+  INPUT_SIZE: 224
+  NUM_FRAMES: 8
+  NUM_CLASSES: 4
+  LABEL_LIST: '/path/to/retailcabinet-tc-clip-code/external_baselines/annotations/retail4/labels.csv'
+  TRAIN_CROP_TYPE: MultiScaleCrop
+  TRAIN_CROP_SCALES: [1.0, 0.875, 0.75, 0.66]
+  TRAIN_RANDOM_CROP: False
+  TRAIN_MAX_WH_SCALE_GAP: 1
+MODEL:
+  ARCH: ViT-B/16
+TRAIN:
+  EPOCHS: 30
+  WARMUP_EPOCHS: 5
+  BATCH_SIZE: 4
+  ACCUMULATION_STEPS: 128
+  LR: 2.2e-05
+  OPT_LEVEL: O0
+AUG:
+  LABEL_SMOOTH: 0.1
+  COLOR_JITTER: 0.8
+  GRAY_SCALE: 0.2
+  MIXUP: 0.8
+  CUTMIX: 1.0
+  MIXUP_SWITCH_PROB: 0.5
+TEST:
+  MULTI_VIEW_INFERENCE: True
+  NUM_CLIP: 1
+  NUM_CROP: 3
+TRAINER:
+  ViFi_CLIP:
+    ZS_EVAL: False
+    USE: both
+SEED: 1024

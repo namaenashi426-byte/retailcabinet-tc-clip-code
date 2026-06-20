@@ -1,0 +1,8 @@
+model_id,display_name,backend,frames,class_balanced_loss,class_weights,n,acc_mean,acc_std,macro_f1_mean,macro_f1_std,bacc_mean,bacc_std,clips_s_mean,clips_s_std,ms_clip_mean,ms_clip_std,peak_mem_mb_mean,peak_mem_mb_std
+slowfast_r101_8f,SlowFast R101 8f,mmaction2,8,False,,3,85.417,3.960,78.353,9.057,73.351,8.687,171.570,2.983,5.827,0.103,660.700,0.000
+tc_clip_motion8_delta_existing,TC-CLIP Motion-only-8 + TemporalDeltaHead existing,tc_clip_existing,8,False,,3,97.102,0.314,97.753,0.297,97.477,0.410,2.230,0.069,448.617,13.594,1501.700,0.000
+tc_clip_motion8_existing,TC-CLIP Motion-only-8 existing,tc_clip_existing,8,False,,3,95.471,1.255,96.461,0.974,95.918,1.209,2.017,0.012,496.477,2.782,1497.400,0.000
+tc_clip_uniform8_delta_existing,TC-CLIP Uniform-8 + TemporalDeltaHead existing,tc_clip_existing,8,False,,3,95.381,0.471,96.596,0.297,96.362,0.064,2.190,0.046,456.680,9.813,1501.700,0.000
+tc_clip_uniform8_existing,TC-CLIP Uniform-8 existing,tc_clip_existing,8,False,,3,77.808,3.030,83.929,1.603,84.296,1.696,2.083,0.100,481.233,23.208,1497.400,0.000
+video_swin_base_8f,Video Swin-B 8f,mmaction2,8,False,,3,90.489,2.758,91.724,1.038,90.548,0.428,67.587,0.384,14.797,0.081,2085.000,0.000
+videomae_v2_vitb_8f,VideoMAE V2 ViT-B 8f,mmaction2,8,False,,3,90.398,2.058,87.486,1.331,85.565,1.922,89.203,0.202,11.213,0.023,1238.100,0.000

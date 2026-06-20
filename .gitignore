@@ -33,6 +33,15 @@ logs/
 *.out
 *.synctex.gz
 
+# External baseline local artifacts
+/external_baselines/repos/
+/external_baselines/checkpoints/
+/external_baselines/work_dirs/
+/external_baselines/run_logs/
+/external_baselines/annotations/retail4/*_absolute.txt
+/external_baselines/**/*.pkl
+/external_baselines/**/*.pth
+
 # IDE and OS files
 .idea/
 .vscode/

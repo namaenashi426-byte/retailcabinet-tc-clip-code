@@ -1,0 +1,59 @@
+{
+  "dataset": "RetailCabinet-4",
+  "subset": "cjj",
+  "tc_root": "/path/to/retailcabinet-tc-clip-code",
+  "data_root": "/path/to/RetailCabinet-4/videos",
+  "label_file": "/path/to/retailcabinet-tc-clip-code/code/labels/retail4_cjj_labels.csv",
+  "labels": {
+    "0": "drink",
+    "1": "open",
+    "2": "purchase",
+    "3": "putback"
+  },
+  "splits": {
+    "train": {
+      "num_samples": 1200,
+      "class_counts": {
+        "0": 155,
+        "1": 132,
+        "2": 605,
+        "3": 308
+      },
+      "missing_count": 0,
+      "missing_examples": [],
+      "duplicate_relative_paths": []
+    },
+    "val": {
+      "num_samples": 301,
+      "class_counts": {
+        "0": 40,
+        "1": 34,
+        "2": 151,
+        "3": 76
+      },
+      "missing_count": 0,
+      "missing_examples": [],
+      "duplicate_relative_paths": []
+    },
+    "test": {
+      "num_samples": 368,
+      "class_counts": {
+        "0": 48,
+        "1": 40,
+        "2": 184,
+        "3": 96
+      },
+      "missing_count": 0,
+      "missing_examples": [],
+      "duplicate_relative_paths": []
+    }
+  },
+  "split_overlap": {
+    "train_vs_val_base_id_count": 0,
+    "train_vs_val_base_id_examples": [],
+    "test_vs_train_base_id_count": 0,
+    "test_vs_train_base_id_examples": [],
+    "test_vs_val_base_id_count": 0,
+    "test_vs_val_base_id_examples": []
+  }
+}
