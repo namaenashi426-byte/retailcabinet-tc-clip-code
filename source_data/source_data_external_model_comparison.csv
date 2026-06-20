@@ -1,0 +1,7 @@
+metric,best_external_model,best_external_score,ours,gain_pp
+Acc,Video Swin,90.49,97.1,6.61
+Macro F1,Video Swin,91.72,97.75,6.03
+BAcc,Video Swin,90.55,97.48,6.93
+Acc-SVI,Video Swin,91.12,96.38,5.26
+Macro F1-SVI,Video Swin,90.06,97.17,7.11
+BAcc-SVI,Video Swin,89.11,97.24,8.13

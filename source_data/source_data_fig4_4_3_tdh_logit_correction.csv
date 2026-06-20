@@ -1,0 +1,3 @@
+panel,sample_role,true_class,rival_class,base_pred,fused_pred,base_margin_true_minus_rival,tdh_correction_true,tdh_correction_rival,tdh_margin_gain,fused_margin_true_minus_rival
+a,Purchase sample,purchase,putback,purchase,purchase,2.140,0.260,-0.330,0.590,2.730
+b,Putback sample,putback,purchase,purchase,putback,-0.660,0.710,-0.660,1.370,0.710

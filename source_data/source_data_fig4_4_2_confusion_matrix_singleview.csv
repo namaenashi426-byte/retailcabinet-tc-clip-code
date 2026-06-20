@@ -1,0 +1,17 @@
+true_class,predicted_class,count,row_percent
+drink,drink,144,100.000
+drink,open,0,0.000
+drink,purchase,0,0.000
+drink,putback,0,0.000
+open,drink,0,0.000
+open,open,119,99.167
+open,purchase,1,0.833
+open,putback,0,0.000
+purchase,drink,0,0.000
+purchase,open,2,0.362
+purchase,purchase,532,96.377
+purchase,putback,18,3.261
+putback,drink,0,0.000
+putback,open,0,0.000
+putback,purchase,19,6.597
+putback,putback,269,93.403

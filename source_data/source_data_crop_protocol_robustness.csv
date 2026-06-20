@@ -1,0 +1,19 @@
+variant,test_mode,metric,score,disable_crop_score,delta_vs_disable_crop_pp
+Motion,center crop,Acc,92.93,92.39,0.54
+Motion,center crop,Macro F1,94.56,93.93,0.63
+Motion,center crop,BAcc,94.73,94.0,0.73
+Motion,three crop,Acc,95.47,92.39,3.08
+Motion,three crop,Macro F1,96.46,93.93,2.53
+Motion,three crop,BAcc,95.92,94.0,1.92
+Motion,disable crop,Acc,92.39,92.39,0.0
+Motion,disable crop,Macro F1,93.93,93.93,0.0
+Motion,disable crop,BAcc,94.0,94.0,0.0
+Motion-NC,center crop,Acc,80.34,93.12,-12.78
+Motion-NC,center crop,Macro F1,78.77,94.8,-16.03
+Motion-NC,center crop,BAcc,77.78,94.28,-16.5
+Motion-NC,three crop,Acc,85.51,93.12,-7.61
+Motion-NC,three crop,Macro F1,82.54,94.8,-12.26
+Motion-NC,three crop,BAcc,81.33,94.28,-12.95
+Motion-NC,disable crop,Acc,93.12,93.12,0.0
+Motion-NC,disable crop,Macro F1,94.8,94.8,0.0
+Motion-NC,disable crop,BAcc,94.28,94.28,0.0

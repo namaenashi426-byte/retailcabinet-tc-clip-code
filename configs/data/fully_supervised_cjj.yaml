@@ -1,0 +1,23 @@
+#@package _global_
+data:
+  train:
+    dataset_name: retail4_cjj_train
+    root: ${retail4.root}
+    num_classes: ${retail4.num_classes.default}
+    label_file: ${retail4.label_files.default}
+    ann_file: ${retail4.ann_files.train}
+  val:
+    dataset_name: retail4_cjj_val
+    root: ${retail4.root}
+    num_classes: ${retail4.num_classes.default}
+    label_file: ${retail4.label_files.default}
+    ann_file: ${retail4.ann_files.val}
+  test:
+    - name: retail4_cjj_test
+      protocol: top1
+      dataset_list:
+      - dataset_name: retail4_cjj_test
+        root: ${retail4.root}
+        num_classes: ${retail4.num_classes.default}
+        label_file: ${retail4.label_files.default}
+        ann_file: ${retail4.ann_files.test}

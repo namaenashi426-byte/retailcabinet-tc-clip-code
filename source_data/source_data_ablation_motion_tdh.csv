@@ -1,0 +1,19 @@
+protocol,variant,metric,score,base_score,gain_pp
+Multi-view,Motion,Acc,95.47,77.81,17.66
+Multi-view,Motion,Macro F1,96.46,83.93,12.53
+Multi-view,Motion,BAcc,95.92,84.3,11.62
+Multi-view,TDH,Acc,95.38,77.81,17.57
+Multi-view,TDH,Macro F1,96.6,83.93,12.67
+Multi-view,TDH,BAcc,96.36,84.3,12.06
+Multi-view,Full,Acc,97.1,77.81,19.29
+Multi-view,Full,Macro F1,97.75,83.93,13.82
+Multi-view,Full,BAcc,97.48,84.3,13.18
+Single-view,Motion,Acc,92.93,75.36,17.57
+Single-view,Motion,Macro F1,94.56,81.81,12.75
+Single-view,Motion,BAcc,94.73,82.28,12.45
+Single-view,TDH,Acc,91.85,75.36,16.49
+Single-view,TDH,Macro F1,94.08,81.81,12.27
+Single-view,TDH,BAcc,94.18,82.28,11.9
+Single-view,Full,Acc,96.38,75.36,21.02
+Single-view,Full,Macro F1,97.17,81.81,15.36
+Single-view,Full,BAcc,97.24,82.28,14.96

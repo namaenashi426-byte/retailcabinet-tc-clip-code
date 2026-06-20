@@ -1,0 +1,40 @@
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.env
+.venv/
+venv/
+env/
+
+# Local data and restricted videos
+/data/
+/videos/
+/RetailCabinet-4/
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Training outputs and checkpoints
+workspace/
+outputs/
+wandb/
+logs/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Generated artifacts
+*.log
+*.aux
+*.out
+*.synctex.gz
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
