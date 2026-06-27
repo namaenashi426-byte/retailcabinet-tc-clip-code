@@ -12,12 +12,15 @@ work directories, or private run logs. Paths in the committed generated configs
 use placeholders such as `/path/to/RetailCabinet-4/videos`; regenerate configs
 with `scripts/run_experiment.py` after setting `defaults.data_root` locally.
 
-The release also includes SSV2-Temporal18 generalization material:
+The release also includes SSV2-Temporal18 generalization material that reuses
+the SSv2 temporal split and label files distributed with upstream
+[TC-CLIP](https://github.com/naver-ai/tc-clip):
 `experiments/baselines_ssv2_temporal18.yaml`,
 `annotations/ssv2_temporal18/`, generated config examples under
 `configs/generated/ssv2_temporal18/`, and
-`results/ssv2_temporal18_generalization_summary.csv`. Raw Something-Something
-V2 videos are not included.
+`results/ssv2_temporal18_generalization_summary.csv`. Raw
+[Something-Something V2](https://developer.qualcomm.com/software/ai-datasets/something-something)
+videos are not included.
 
 ## Layout
 

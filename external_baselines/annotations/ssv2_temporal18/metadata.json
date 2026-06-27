@@ -3,6 +3,11 @@
   "subset": "Temporal18",
   "data_root": "/path/to/SSv2/videos",
   "label_file": "labels/labels_temporal_static/ssv2_temporal18_labels.csv",
+  "provenance": {
+    "split_source": "https://github.com/naver-ai/tc-clip/tree/main/datasets_splits/temporal_static_splits/ssv2_splits",
+    "label_source": "https://github.com/naver-ai/tc-clip/tree/main/labels/labels_temporal_static",
+    "video_source": "https://developer.qualcomm.com/software/ai-datasets/something-something"
+  },
   "labels": {
     "0": "Covering something with something",
     "1": "Uncovering something",
