@@ -1,0 +1,282 @@
+{
+  "defaults": {
+    "dataset": "ssv2_temporal18",
+    "num_classes": 18,
+    "run_namespace": "ssv2_temporal18",
+    "seeds": [1024, 1025, 1026],
+    "annotation_dir": "annotations/ssv2_temporal18",
+    "data_root": "/path/to/SSv2/videos",
+    "target_effective_train_batch_size": 512,
+    "train_epochs": 30,
+    "warmup_epochs": 5,
+    "optimizer_lr": 2.2e-05,
+    "optimizer_lr_min": 2.2e-07,
+    "optimizer_weight_decay": 0.001,
+    "optimizer_betas": [0.9, 0.98],
+    "optimizer_eps": 1e-08,
+    "warmup_start_factor": 1e-06,
+    "mmaction_optim_wrapper_type": "AmpOptimWrapper",
+    "class_balanced_loss": false,
+    "checkpoint_interval": -1,
+    "checkpoint_save_best": "auto",
+    "checkpoint_save_last": true,
+    "checkpoint_max_keep_ckpts": 1,
+    "work_dir_root": "work_dirs",
+    "checkpoint_dir": "checkpoints"
+  },
+  "repositories": [
+    {
+      "repo_id": "mmaction2",
+      "url": "https://github.com/open-mmlab/mmaction2.git",
+      "path": "repos/mmaction2",
+      "required": true
+    },
+    {
+      "repo_id": "vifi_clip",
+      "url": "https://github.com/muzairkhattak/ViFi-CLIP.git",
+      "path": "repos/ViFi-CLIP",
+      "required": true
+    },
+    {
+      "repo_id": "actionclip",
+      "url": "https://github.com/sallymmx/ActionCLIP.git",
+      "path": "repos/ActionCLIP",
+      "required": false
+    },
+    {
+      "repo_id": "videomaev2_official",
+      "url": "https://github.com/OpenGVLab/VideoMAEv2.git",
+      "path": "repos/VideoMAEv2",
+      "required": false
+    },
+    {
+      "repo_id": "video_swin_official",
+      "url": "https://github.com/SwinTransformer/Video-Swin-Transformer.git",
+      "path": "repos/Video-Swin-Transformer",
+      "required": false
+    }
+  ],
+  "models": [
+    {
+      "model_id": "videomae_v2_vitb_8f",
+      "display_name": "VideoMAE V2 ViT-B 8f",
+      "backend": "mmaction2",
+      "repo": "repos/mmaction2",
+      "frames": 8,
+      "input_size": 224,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 1,
+      "test_batch_size": 1,
+      "override_backbone_num_frames": true,
+      "base_config_globs": [
+        "configs/recognition/videomaev2/*vit-base*16x4x1*kinetics-400*.py",
+        "configs/recognition/videomaev2/*vit-b*16x4x1*kinetics-400*.py"
+      ],
+      "checkpoint": "",
+      "train_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options randomness.seed={seed}",
+      "smoke_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options train_cfg.max_epochs=1 val_begin=1 randomness.seed={seed}",
+      "eval_cmd": "python tools/test.py \"{config}\" \"{checkpoint}\" --work-dir \"{work_dir}\" --dump \"{dump_file}\"",
+      "metrics_parser": "mmaction2_log"
+    },
+    {
+      "model_id": "video_swin_base_8f",
+      "display_name": "Video Swin-B 8f",
+      "backend": "mmaction2",
+      "repo": "repos/mmaction2",
+      "frames": 8,
+      "input_size": 224,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 1,
+      "test_batch_size": 1,
+      "base_config_globs": [
+        "configs/recognition/swin/*swin-base*32x2x1*kinetics*.py",
+        "configs/recognition/swin/*swin_base*32x2x1*kinetics*.py"
+      ],
+      "checkpoint": "",
+      "train_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options randomness.seed={seed}",
+      "smoke_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options train_cfg.max_epochs=1 val_begin=1 randomness.seed={seed}",
+      "eval_cmd": "python tools/test.py \"{config}\" \"{checkpoint}\" --work-dir \"{work_dir}\" --dump \"{dump_file}\"",
+      "ignore_work_dir_fallback": true,
+      "metrics_parser": "mmaction2_log"
+    },
+    {
+      "model_id": "slowfast_r101_8f",
+      "display_name": "SlowFast R101 8f",
+      "backend": "mmaction2",
+      "repo": "repos/mmaction2",
+      "frames": 8,
+      "input_size": 224,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 1,
+      "test_batch_size": 1,
+      "base_config_globs": [
+        "configs/recognition/slowfast/*slowfast_r101_8xb8-8x8x1*kinetics400-rgb.py",
+        "configs/recognition/slowfast/*slowfast_r101*8x8x1*kinetics*.py"
+      ],
+      "checkpoint": "",
+      "train_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options randomness.seed={seed}",
+      "smoke_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options train_cfg.max_epochs=1 val_begin=1 randomness.seed={seed}",
+      "eval_cmd": "python tools/test.py \"{config}\" \"{checkpoint}\" --work-dir \"{work_dir}\" --dump \"{dump_file}\"",
+      "metrics_parser": "mmaction2_log"
+    },
+    {
+      "model_id": "timesformer_divst_8f",
+      "display_name": "TimeSformer DivST ViT-B 8f",
+      "backend": "mmaction2",
+      "repo": "repos/mmaction2",
+      "frames": 8,
+      "input_size": 224,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 1,
+      "test_batch_size": 1,
+      "override_backbone_num_frames": true,
+      "base_config_globs": [
+        "configs/recognition/timesformer/timesformer_divST_8xb8-8x32x1-15e_kinetics400-rgb.py"
+      ],
+      "checkpoint": "",
+      "train_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options randomness.seed={seed}",
+      "smoke_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options train_cfg.max_epochs=1 val_begin=1 randomness.seed={seed}",
+      "eval_cmd": "python tools/test.py \"{config}\" \"{checkpoint}\" --work-dir \"{work_dir}\" --dump \"{dump_file}\"",
+      "metrics_parser": "mmaction2_log"
+    },
+    {
+      "model_id": "vifi_clip_8f",
+      "display_name": "ViFi-CLIP 8f",
+      "backend": "vifi_clip",
+      "repo": "repos/ViFi-CLIP",
+      "frames": 8,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 4,
+      "config": "",
+      "checkpoint": "",
+      "train_cmd": "python -m torch.distributed.launch --nproc_per_node=1 main.py -cfg {config} --output {work_dir}",
+      "smoke_cmd": "python -m torch.distributed.launch --nproc_per_node=1 main.py -cfg {config} --output {work_dir} --opts TRAIN.EPOCHS 1 TRAIN.WARMUP_EPOCHS 0 TRAIN.BATCH_SIZE 2 TRAIN.ACCUMULATION_STEPS 1 TEST.MULTI_VIEW_INFERENCE False TEST.NUM_CLIP 1 TEST.NUM_CROP 1",
+      "eval_cmd": "python -m torch.distributed.launch --nproc_per_node=1 main.py -cfg {config} --output {work_dir} --only_test --resume {checkpoint} --opts TEST.MULTI_VIEW_INFERENCE {multi_view_inference} TEST.NUM_CLIP {num_clip} TEST.NUM_CROP {num_crop}",
+      "metrics_parser": "generic_log"
+    },
+    {
+      "model_id": "videomae_v2_vitb",
+      "display_name": "VideoMAE V2 ViT-B 16f",
+      "backend": "mmaction2",
+      "repo": "repos/mmaction2",
+      "frames": 16,
+      "input_size": 224,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 1,
+      "test_batch_size": 1,
+      "base_config_globs": [
+        "configs/recognition/videomaev2/*vit-base*16x4x1*kinetics-400*.py",
+        "configs/recognition/videomaev2/*vit-b*16x4x1*kinetics-400*.py"
+      ],
+      "checkpoint": "",
+      "train_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options randomness.seed={seed}",
+      "smoke_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options train_cfg.max_epochs=1 val_begin=1 randomness.seed={seed}",
+      "eval_cmd": "python tools/test.py \"{config}\" \"{checkpoint}\" --work-dir \"{work_dir}\" --dump \"{dump_file}\"",
+      "metrics_parser": "mmaction2_log"
+    },
+    {
+      "model_id": "video_swin_base",
+      "display_name": "Video Swin-B 32f",
+      "backend": "mmaction2",
+      "repo": "repos/mmaction2",
+      "frames": 32,
+      "input_size": 224,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 1,
+      "test_batch_size": 1,
+      "base_config_globs": [
+        "configs/recognition/swin/*swin-base*32x2x1*kinetics*.py",
+        "configs/recognition/swin/*swin_base*32x2x1*kinetics*.py"
+      ],
+      "checkpoint": "",
+      "train_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options randomness.seed={seed}",
+      "smoke_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options train_cfg.max_epochs=1 val_begin=1 randomness.seed={seed}",
+      "eval_cmd": "python tools/test.py \"{config}\" \"{checkpoint}\" --work-dir \"{work_dir}\" --dump \"{dump_file}\"",
+      "metrics_parser": "mmaction2_log"
+    },
+    {
+      "model_id": "slowfast_r101",
+      "display_name": "SlowFast R101 32f",
+      "backend": "mmaction2",
+      "repo": "repos/mmaction2",
+      "frames": 32,
+      "input_size": 224,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 1,
+      "test_batch_size": 1,
+      "base_config_globs": [
+        "configs/recognition/slowfast/*slowfast_r101_8xb8-8x8x1*kinetics400-rgb.py",
+        "configs/recognition/slowfast/*slowfast_r101*8x8x1*kinetics*.py"
+      ],
+      "checkpoint": "",
+      "train_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options randomness.seed={seed}",
+      "smoke_cmd": "python tools/train.py \"{config}\" --work-dir \"{work_dir}\" --cfg-options train_cfg.max_epochs=1 val_begin=1 randomness.seed={seed}",
+      "eval_cmd": "python tools/test.py \"{config}\" \"{checkpoint}\" --work-dir \"{work_dir}\" --dump \"{dump_file}\"",
+      "metrics_parser": "mmaction2_log"
+    },
+    {
+      "model_id": "vifi_clip_16f",
+      "display_name": "ViFi-CLIP 16f",
+      "backend": "vifi_clip",
+      "repo": "repos/ViFi-CLIP",
+      "frames": 16,
+      "test_num_clips": 1,
+      "test_num_crops": 3,
+      "train_batch_size": 4,
+      "config": "",
+      "checkpoint": "",
+      "train_cmd": "python -m torch.distributed.launch --nproc_per_node=1 main.py -cfg {config} --output {work_dir}",
+      "smoke_cmd": "python -m torch.distributed.launch --nproc_per_node=1 main.py -cfg {config} --output {work_dir} --opts TRAIN.EPOCHS 1 TRAIN.WARMUP_EPOCHS 0 TRAIN.BATCH_SIZE 2 TRAIN.ACCUMULATION_STEPS 1 TEST.MULTI_VIEW_INFERENCE False TEST.NUM_CLIP 1 TEST.NUM_CROP 1",
+      "eval_cmd": "python -m torch.distributed.launch --nproc_per_node=1 main.py -cfg {config} --output {work_dir} --only_test --resume {checkpoint} --opts TEST.MULTI_VIEW_INFERENCE {multi_view_inference} TEST.NUM_CLIP {num_clip} TEST.NUM_CROP {num_crop}",
+      "metrics_parser": "generic_log"
+    },
+    {
+      "model_id": "tc_clip_uniform8_existing",
+      "display_name": "TC-CLIP Uniform-8 existing",
+      "backend": "tc_clip_existing",
+      "frames": 8,
+      "log_globs": [
+        "../shiyan/M1/M1_seed{seed}/tc_clip_uniform8*_test/log_rank0.txt"
+      ],
+      "metrics_parser": "tc_clip_log"
+    },
+    {
+      "model_id": "tc_clip_motion8_existing",
+      "display_name": "TC-CLIP Motion-only-8 existing",
+      "backend": "tc_clip_existing",
+      "frames": 8,
+      "log_globs": [
+        "../shiyan/M1/M1_seed{seed}/tc_clip_motion8*_test/log_rank0.txt"
+      ],
+      "metrics_parser": "tc_clip_log"
+    },
+    {
+      "model_id": "tc_clip_uniform8_delta_existing",
+      "display_name": "TC-CLIP Uniform-8 + TemporalDeltaHead existing",
+      "backend": "tc_clip_existing",
+      "frames": 8,
+      "log_globs": [
+        "../shiyan/M3/M3_seed{seed}/tc_clip_temporal_delta8_detach_uniform*_test/log_rank0.txt"
+      ],
+      "metrics_parser": "tc_clip_log"
+    },
+    {
+      "model_id": "tc_clip_motion8_delta_existing",
+      "display_name": "TC-CLIP Motion-only-8 + TemporalDeltaHead existing",
+      "backend": "tc_clip_existing",
+      "frames": 8,
+      "log_globs": [
+        "../shiyan/M3/M3_seed{seed}/tc_clip_temporal_delta8_detach_motion*_test/log_rank0.txt"
+      ],
+      "metrics_parser": "tc_clip_log"
+    }
+  ]
+}

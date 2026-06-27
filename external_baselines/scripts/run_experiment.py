@@ -77,6 +77,13 @@ def resolve_data_root(defaults: dict[str, Any]) -> Path:
     raise RuntimeError("No data_root found in baselines.yaml defaults or metadata.json.")
 
 
+def resolve_run_namespace(defaults: dict[str, Any]) -> str:
+    namespace = str(defaults.get("run_namespace", "")).strip().strip("/\\")
+    if any(part == ".." for part in Path(namespace).parts):
+        raise ValueError(f"Invalid run_namespace={namespace!r}")
+    return namespace
+
+
 def resolve_eval_num_crops(model: dict[str, Any], override: int | None) -> int:
     num_crops = int(override if override is not None else model.get("test_num_crops", 3))
     if num_crops not in (1, 3):
@@ -185,7 +192,21 @@ def write_mmaction_config(
             max(1, target_effective_batch_size // train_batch_size),
         )
     )
+    checkpoint_interval = int(model.get("checkpoint_interval", defaults.get("checkpoint_interval", 1)))
+    checkpoint_save_best = model.get(
+        "checkpoint_save_best",
+        defaults.get("checkpoint_save_best", "auto"),
+    )
+    checkpoint_save_last = bool(
+        model.get("checkpoint_save_last", defaults.get("checkpoint_save_last", True))
+    )
+    checkpoint_max_keep_ckpts = int(
+        model.get("checkpoint_max_keep_ckpts", defaults.get("checkpoint_max_keep_ckpts", 3))
+    )
+    namespace = resolve_run_namespace(defaults)
     generated_dir = EXTERNAL_ROOT / "configs" / "generated"
+    if namespace:
+        generated_dir = generated_dir / namespace
     generated_dir.mkdir(parents=True, exist_ok=True)
     out_file = generated_dir / f"{model['model_id']}_seed{seed}_{config_role}.py"
 
@@ -260,6 +281,10 @@ report_eval_split = '{eval_split}'
 class_balanced_loss = {class_balanced_loss}
 class_counts = {class_counts!r}
 class_weights = {class_weights_literal}
+checkpoint_interval = {checkpoint_interval}
+checkpoint_save_best = {checkpoint_save_best!r}
+checkpoint_save_last = {checkpoint_save_last}
+checkpoint_max_keep_ckpts = {checkpoint_max_keep_ckpts}
 
 {model_override}
 
@@ -380,7 +405,12 @@ param_scheduler = [
         begin=warmup_epochs,
         end=train_epochs)
 ]
-default_hooks = dict(checkpoint=dict(interval=1, save_best='auto', max_keep_ckpts=3))
+default_hooks = dict(
+    checkpoint=dict(
+        interval=checkpoint_interval,
+        save_best=checkpoint_save_best,
+        save_last=checkpoint_save_last,
+        max_keep_ckpts=checkpoint_max_keep_ckpts))
 randomness = dict(seed={seed}, deterministic=False)
 auto_scale_lr = dict(enable=False)
 """
@@ -399,7 +429,10 @@ def write_vifi_config(
 ) -> Path:
     ann_dir = (EXTERNAL_ROOT / defaults["annotation_dir"]).resolve()
     data_root = resolve_data_root(defaults)
+    namespace = resolve_run_namespace(defaults)
     generated_dir = EXTERNAL_ROOT / "configs" / "generated"
+    if namespace:
+        generated_dir = generated_dir / namespace
     generated_dir.mkdir(parents=True, exist_ok=True)
     out_file = generated_dir / f"{model['model_id']}_seed{seed}_{config_role}.yaml"
     frames = int(model.get("frames", 16))
@@ -429,7 +462,7 @@ DATA:
   ROOT: '{data_root.as_posix()}'
   TRAIN_FILE: '{(ann_dir / 'train.txt').as_posix()}'
   VAL_FILE: '{val_file.as_posix()}'
-  DATASET: retail4_cjj
+  DATASET: {defaults.get('dataset', 'retail4_cjj')}
   INPUT_SIZE: 224
   NUM_FRAMES: {frames}
   NUM_CLASSES: {num_classes}
@@ -494,8 +527,12 @@ def build_run_log_path(
     stage: str,
     num_clip: int,
     num_crop: int,
+    namespace: str = "",
 ) -> Path:
-    log_dir = (EXTERNAL_ROOT / "run_logs" / model_id / f"seed{seed}").resolve()
+    log_root = EXTERNAL_ROOT / "run_logs"
+    if namespace:
+        log_root = log_root / namespace
+    log_dir = (log_root / model_id / f"seed{seed}").resolve()
     if stage in {"val", "test"}:
         log_name = f"{stage}_clip{num_clip}_crop{num_crop}.log"
     else:
@@ -532,12 +569,11 @@ def build_context(
             (EXTERNAL_ROOT / defaults["annotation_dir"] / "train.txt").resolve(),
             int(defaults.get("num_classes", 4)),
         )
-    work_dir = (
-        EXTERNAL_ROOT
-        / defaults.get("work_dir_root", "work_dirs")
-        / model["model_id"]
-        / f"seed{seed}"
-    ).resolve()
+    namespace = resolve_run_namespace(defaults)
+    work_dir_root = EXTERNAL_ROOT / defaults.get("work_dir_root", "work_dirs")
+    if namespace:
+        work_dir_root = work_dir_root / namespace
+    work_dir = (work_dir_root / model["model_id"] / f"seed{seed}").resolve()
     work_dir.mkdir(parents=True, exist_ok=True)
 
     model_config = model.get("config") or ""
@@ -579,6 +615,7 @@ def build_context(
         stage,
         eval_num_clips,
         eval_num_crops,
+        namespace,
     )
 
     return {
@@ -711,6 +748,11 @@ def list_models(config: dict[str, Any]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--experiment-file",
+        default=str(EXPERIMENT_FILE),
+        help="Experiment registry to use. Defaults to experiments/baselines.yaml.",
+    )
     parser.add_argument("--model", help="Model id from experiments/baselines.yaml")
     parser.add_argument("--seed", type=int, default=1024)
     parser.add_argument("--stage", choices=["train", "smoke", "test", "val", "print"], default="print")
@@ -739,7 +781,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    config = load_experiment_file()
+    config = load_experiment_file(Path(args.experiment_file))
     if args.list:
         list_models(config)
         return 0

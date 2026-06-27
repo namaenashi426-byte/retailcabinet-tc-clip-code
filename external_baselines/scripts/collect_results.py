@@ -44,6 +44,13 @@ def load_experiment_file(path: Path = EXPERIMENT_FILE) -> dict[str, Any]:
         return yaml.safe_load(text)
 
 
+def resolve_run_namespace(config: dict[str, Any]) -> str:
+    namespace = str(config.get("defaults", {}).get("run_namespace", "")).strip().strip("/\\")
+    if any(part == ".." for part in Path(namespace).parts):
+        raise ValueError(f"Invalid run_namespace={namespace!r}")
+    return namespace
+
+
 def read_text(path: Path) -> str:
     return ANSI_RE.sub("", path.read_text(encoding="utf-8", errors="ignore"))
 
@@ -114,7 +121,7 @@ def resolved_class_weights(
     return ""
 
 
-def find_logs_for_model(model: dict[str, Any], seed: int) -> list[Path]:
+def find_logs_for_model(config: dict[str, Any], model: dict[str, Any], seed: int) -> list[Path]:
     backend = model.get("backend")
     if backend == "tc_clip_existing":
         logs: list[Path] = []
@@ -124,7 +131,13 @@ def find_logs_for_model(model: dict[str, Any], seed: int) -> list[Path]:
         return [path for path in logs if "test_svi" not in path.as_posix()]
 
     candidates: list[Path] = []
-    stable_log_dir = EXTERNAL_ROOT / "run_logs" / model["model_id"] / f"seed{seed}"
+    namespace = resolve_run_namespace(config)
+    log_root = EXTERNAL_ROOT / "run_logs"
+    work_root = EXTERNAL_ROOT / config["defaults"].get("work_dir_root", "work_dirs")
+    if namespace:
+        log_root = log_root / namespace
+        work_root = work_root / namespace
+    stable_log_dir = log_root / model["model_id"] / f"seed{seed}"
     for pattern in (
         "test_clip*_crop*.log",
         "val_clip*_crop*.log",
@@ -135,7 +148,7 @@ def find_logs_for_model(model: dict[str, Any], seed: int) -> list[Path]:
         candidates.extend(sorted(stable_log_dir.glob(pattern)))
 
     if not model.get("ignore_work_dir_fallback", False):
-        work_dir = EXTERNAL_ROOT / "work_dirs" / model["model_id"] / f"seed{seed}"
+        work_dir = work_root / model["model_id"] / f"seed{seed}"
         for suffix in ("*.log", "*.txt", "*.json"):
             candidates.extend(sorted(work_dir.rglob(suffix)))
 
@@ -156,7 +169,7 @@ def collect_rows(config: dict[str, Any]) -> list[dict[str, str]]:
     for model in config["models"]:
         seeds = model.get("seeds", default_seeds)
         for seed in seeds:
-            logs = find_logs_for_model(model, int(seed))
+            logs = find_logs_for_model(config, model, int(seed))
             if not logs:
                 rows.append(row_for_missing(config, model, int(seed)))
                 continue
@@ -299,10 +312,16 @@ def write_aggregate_csv(path: Path, rows: list[dict[str, str]]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--experiment-file",
+        type=Path,
+        default=EXPERIMENT_FILE,
+        help="Experiment registry to collect. Defaults to experiments/baselines.yaml.",
+    )
     parser.add_argument("--out", type=Path, default=EXTERNAL_ROOT / "results" / "summary.csv")
     args = parser.parse_args()
 
-    config = load_experiment_file()
+    config = load_experiment_file(args.experiment_file)
     rows = collect_rows(config)
     out_path = args.out.resolve()
     write_csv(out_path, rows)

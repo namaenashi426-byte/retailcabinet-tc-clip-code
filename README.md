@@ -9,6 +9,7 @@ The implementation extends the published TC-CLIP codebase with:
 - Motion-R / Motion-8 motion-aware frame sampling.
 - Temporal Difference Head (TDH) for signed adjacent-frame feature differences.
 - RetailCabinet-4 labels and fixed train/validation/test split files.
+- SSV2-Temporal18 labels and fixed split files used for generalization checks.
 - Tabular source data used to generate the reported figures.
 - External-baseline orchestration code for MMAction2 and ViFi-CLIP comparisons.
 
@@ -20,12 +21,18 @@ The included files support reproducible setup and result inspection:
 
 - `labels/retail4_cjj_labels.csv`: class names.
 - `datasets_splits/`: fixed train, validation, and test split files.
+- `labels/labels_temporal_static/ssv2_temporal18_labels.csv` and
+  `datasets_splits/temporal_static_splits/ssv2_splits/`: SSV2-Temporal18
+  label and split files for public-dataset generalization experiments.
 - `source_data/`: processed tabular source data for the paper figures.
 - `configs/data/fully_supervised_cjj.yaml`: RetailCabinet-4 data configuration.
 - `external_baselines/`: comparison-experiment wrappers, generated config examples,
-  RetailCabinet-4 annotation files, and aggregated baseline result tables.
+  RetailCabinet-4 and SSV2-Temporal18 annotation files, and aggregated baseline
+  result tables.
 
 To run training or evaluation, place the restricted RetailCabinet-4 video files in the structure referenced by the split files and set `retail4.root` in `configs/common/default.yaml` or override it on the command line.
+For SSV2-Temporal18 experiments, obtain the public Something-Something V2 videos
+from the official dataset source and set `ssv2.root` locally.
 
 Example structure:
 

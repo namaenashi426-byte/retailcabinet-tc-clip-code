@@ -1,0 +1,21 @@
+group,model_id,display_name,backend,seed,frames,view,num_clip,num_crop,sample_type,temporal_delta,acc,acc5,macro_f1,bacc,clips_s,ms_clip,peak_mem_mb,status
+tc_clip_self_ablation,tc_clip_uniform8,TC-CLIP Uniform-8,tc_clip,1024,8,multi_view,1,3,uniform,false,59.508,92.999,51.000,50.399,2.33,428.89,9260.2,parsed
+tc_clip_self_ablation,tc_clip_uniform8,TC-CLIP Uniform-8,tc_clip,1024,8,single_view,1,1,uniform,false,58.054,92.257,50.285,49.795,2.42,412.65,9260.2,parsed
+tc_clip_self_ablation,tc_clip_motion8,TC-CLIP Motion-only-8,tc_clip,1024,8,multi_view,1,3,motion,false,61.080,93.533,51.816,51.932,2.38,420.55,9260.2,parsed
+tc_clip_self_ablation,tc_clip_motion8,TC-CLIP Motion-only-8,tc_clip,1024,8,single_view,1,1,motion,false,59.478,92.406,50.790,51.061,2.47,404.48,9260.2,parsed
+tc_clip_self_ablation,tc_clip_hybrid8,TC-CLIP Hybrid-8,tc_clip,1024,8,multi_view,1,3,hybrid,false,59.063,93.830,49.907,49.090,2.30,434.13,9260.2,parsed
+tc_clip_self_ablation,tc_clip_hybrid8,TC-CLIP Hybrid-8,tc_clip,1024,8,single_view,1,1,hybrid,false,57.253,92.702,48.736,48.227,2.38,420.27,9260.2,parsed
+tc_clip_self_ablation,tc_clip_uniform8_tdh,TC-CLIP Uniform-8 + TemporalDeltaHead,tc_clip,1024,8,multi_view,1,3,uniform,true,69.623,94.631,61.680,60.803,2.36,422.87,9264.4,parsed
+tc_clip_self_ablation,tc_clip_uniform8_tdh,TC-CLIP Uniform-8 + TemporalDeltaHead,tc_clip,1024,8,single_view,1,1,uniform,true,68.229,93.652,60.672,59.977,2.34,426.78,9264.4,parsed
+tc_clip_self_ablation,tc_clip_motion8_tdh,TC-CLIP Motion-only-8 + TemporalDeltaHead,tc_clip,1024,8,multi_view,1,3,motion,true,69.238,94.690,60.118,58.941,2.32,431.81,9264.4,parsed
+tc_clip_self_ablation,tc_clip_motion8_tdh,TC-CLIP Motion-only-8 + TemporalDeltaHead,tc_clip,1024,8,single_view,1,1,motion,true,67.369,94.067,59.166,58.191,2.46,406.29,9264.4,parsed
+external_model_comparison,videomae_v2_vitb_8f,VideoMAE V2 ViT-B 8f,mmaction2,1024,8,single_view,1,1,uniform,false,41.857,80.718,37.476,38.613,76.71,13.04,638.0,parsed
+external_model_comparison,videomae_v2_vitb_8f,VideoMAE V2 ViT-B 8f,mmaction2,1024,8,multi_view,1,3,uniform,false,42.539,82.290,38.550,39.431,87.31,11.45,1238.1,parsed
+external_model_comparison,video_swin_base_8f,Video Swin-B 8f,mmaction2,1024,8,single_view,1,1,uniform,false,41.976,86.532,32.143,32.968,55.29,18.09,955.6,parsed
+external_model_comparison,video_swin_base_8f,Video Swin-B 8f,mmaction2,1024,8,multi_view,1,3,uniform,false,42.450,86.947,32.240,33.068,64.98,15.39,2085.1,parsed
+external_model_comparison,slowfast_r101_8f,SlowFast R101 8f,mmaction2,1024,8,single_view,1,1,uniform,false,20.647,56.719,13.293,14.974,102.88,9.72,469.0,parsed
+external_model_comparison,slowfast_r101_8f,SlowFast R101 8f,mmaction2,1024,8,multi_view,1,3,uniform,false,19.935,57.965,12.554,14.280,163.22,6.13,660.9,parsed
+external_model_comparison,timesformer_divst_8f,TimeSformer DivST ViT-B 8f,mmaction2,1024,8,single_view,1,1,uniform,false,59.241,94.304,51.270,50.834,32.95,30.35,770.8,parsed
+external_model_comparison,timesformer_divst_8f,TimeSformer DivST ViT-B 8f,mmaction2,1024,8,multi_view,1,3,uniform,false,61.169,94.720,52.603,52.052,36.78,27.19,1369.0,parsed
+external_model_comparison,vifi_clip_8f,ViFi-CLIP 8f,vifi_clip,1024,8,single_view,1,1,uniform,false,51.306,86.766,42.717,42.365,46.26,21.61,2080.9,parsed
+external_model_comparison,vifi_clip_8f,ViFi-CLIP 8f,vifi_clip,1024,8,multi_view,1,3,uniform,false,52.285,87.537,43.087,42.593,44.74,22.35,2080.9,parsed

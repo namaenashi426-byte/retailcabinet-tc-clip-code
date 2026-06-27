@@ -1,0 +1,38 @@
+{
+  "dataset": "Something-Something V2",
+  "subset": "Temporal18",
+  "data_root": "/path/to/SSv2/videos",
+  "label_file": "labels/labels_temporal_static/ssv2_temporal18_labels.csv",
+  "labels": {
+    "0": "Covering something with something",
+    "1": "Uncovering something",
+    "2": "Lifting something up completely without letting it drop down",
+    "3": "Lifting something up completely, then letting it drop down",
+    "4": "Lifting something with something on it",
+    "5": "Lifting up one end of something, then letting it drop down",
+    "6": "Approaching something with your camera",
+    "7": "Moving something towards the camera",
+    "8": "Moving something away from the camera",
+    "9": "Moving away from something with your camera",
+    "10": "Moving something and something away from each other",
+    "11": "Moving something and something closer to each other",
+    "12": "Moving something and something so they collide with each other",
+    "13": "Moving something away from something",
+    "14": "Moving something closer to something",
+    "15": "Pretending to turn something upside down",
+    "16": "Stuffing something into something",
+    "17": "Turning something upside down"
+  },
+  "splits": {
+    "train": {
+      "num_samples": 25012
+    },
+    "val": {
+      "num_samples": 3371
+    },
+    "test": {
+      "num_samples": 3371,
+      "note": "Reuses the public validation split for reporting because labels for the held-out SSv2 test split are not available in this project."
+    }
+  }
+}
